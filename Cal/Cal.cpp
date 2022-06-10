@@ -50,22 +50,12 @@ cal::~cal()
 
 void cal::OnButtonClicked(wxCommandEvent& evt)
 {
-	int num1 = 0;
-	int num2 = 0;
+
 	wxString txtdisplay = "";
-	wxString posneg = "";
 	if (evt.GetId() >= 0 && evt.GetId() < 10)
 	{
 		txtdisplay << evt.GetId();
 		txtbox->AppendText(txtdisplay);
-		if (num1 == 0)
-		{
-			num1 = evt.GetId();
-		}
-		else
-		{
-			num2 = evt.GetId();
-		}
 	}
 
 	if (evt.GetId() == 16)
@@ -97,6 +87,30 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 	{
 		txtbox->AppendText("/");
 
+	}
+	if (evt.GetId() == 15)
+	{
+		txtbox->AppendText("DEC");
+	}
+	if (evt.GetId() == 17)
+	{
+		txtbox->AppendText("MOD");
+	}
+	if (evt.GetId() == 18)
+	{
+		txtbox->AppendText("HEX");
+	}
+	if (evt.GetId() == 19)
+	{
+		txtbox->AppendText("Binary");
+	}
+	if (evt.GetId() == 20)
+	{
+		txtbox->AppendText("=");
+	}
+	if (evt.GetId() == 10)
+	{
+		txtbox->AppendText("+/-");
 	}
 }
 
