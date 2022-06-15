@@ -10,27 +10,27 @@ cal::cal() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(26
 	txtbox = new wxTextCtrl(this, 100, "", wxPoint(10, 20), wxSize(230, 35));
 	txtbox->SetFont(txt);
 
-	btn = build.btn0();
-	btn = build.btn1();
-	btn = build.btn2();
-	btn = build.btn3();
-	btn = build.btn4();
-	btn = build.btn5();
-	btn = build.btn6();
-	btn = build.btn7();
-	btn = build.btn8();
-	btn = build.btn9();
-	btn = build.btn10();
-	btn = build.btn11();
-	btn = build.btn12();
-	btn = build.btn13();
-	btn = build.btn14();
-	btn = build.btn15();
-	btn = build.btn16();
-	btn = build.btn17();
-	btn = build.btn18();
-	btn = build.btn19();
-	btn = build.btn20();
+	btn = build.builder(0, "0", wxPoint(70, 310), wxSize(50, 50));
+	btn = build.builder(1, "1", wxPoint(10, 250), wxSize(50, 50));
+	btn = build.builder(2, "2", wxPoint(70, 250), wxSize(50, 50));
+	btn = build.builder(3, "3", wxPoint(130, 250), wxSize(50, 50));
+	btn = build.builder(4, "4", wxPoint(10, 190), wxSize(50, 50));
+	btn = build.builder(5, "5", wxPoint(70, 190), wxSize(50, 50));
+	btn = build.builder(6, "6", wxPoint(130, 190), wxSize(50, 50));
+	btn = build.builder(7, "7", wxPoint(10, 130), wxSize(50, 50));
+	btn = build.builder(8, "8", wxPoint(70, 130), wxSize(50, 50));
+	btn = build.builder(9, "9", wxPoint(130, 130), wxSize(50, 50));
+	btn = build.builder(10, "+/-", wxPoint(10, 310), wxSize(50, 50));
+	btn = build.builder(11, "+", wxPoint(130, 310), wxSize(50, 50));
+	btn = build.builder(12, "*", wxPoint(190, 190), wxSize(50, 50));
+	btn = build.builder(13, "/", wxPoint(190, 250), wxSize(50, 50));
+	btn = build.builder(14, "-", wxPoint(190, 310), wxSize(50, 50));
+	btn = build.builder(15, "Dec", wxPoint(190, 70), wxSize(50, 50));
+	btn = build.builder(16, "C", wxPoint(190, 130), wxSize(50, 50));
+	btn = build.builder(17, "Mod", wxPoint(10, 70), wxSize(50, 50));
+	btn = build.builder(18, "Hex", wxPoint(70, 70), wxSize(50, 50));
+	btn = build.builder(19, "Binary", wxPoint(130, 70), wxSize(50, 50));
+	btn = build.builder(20, "=", wxPoint(10, 370), wxSize(230, 30));
 
 
 	Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cal::OnButtonClicked, this);
