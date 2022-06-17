@@ -1,8 +1,14 @@
 #include "cal.h"
 #include "factory.h"
+#include "processor.h"
 wxBEGIN_EVENT_TABLE(cal, wxFrame)
 
 wxEND_EVENT_TABLE()
+int num1, num2;
+wxString _num1 = "";
+wxString _num2 = "";
+bool symbol = false;
+wxString sym = "";
 cal::cal() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(265, 445))
 {
 	factory build = factory(this);
@@ -47,11 +53,26 @@ cal::~cal()
 
 void cal::OnButtonClicked(wxCommandEvent& evt)
 {
+	processor* process = processor::GetInstance();
 	wxString txtdisplay = "";
 	if (evt.GetId() >= 0 && evt.GetId() < 10)
 	{
 		txtdisplay << evt.GetId();
 		txtbox->AppendText(txtdisplay);
+		if (symbol == true)
+		{
+			if (num2 != 0)
+			{
+				_num2 = std::to_string(num2);
+				_num2 += std::to_string(evt.GetId());
+			}
+			else
+			{
+				_num2 += std::to_string(evt.GetId());
+			}
+			
+
+		}
 	}
 
 	if (evt.GetId() == 16)
@@ -60,33 +81,40 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 	}
 	if (evt.GetId() == 11)
 	{
-
+		_num1 = txtbox->GetValue();
 		txtbox->AppendText("+");
+		sym = "+";
+		symbol = true;
 
 	}
 	if (evt.GetId() == 14)
 	{
-
+		_num1 = txtbox->GetValue();
 		txtbox->AppendText("-");
-
-
+		sym = "-";
+		symbol = true;
 
 	}
 	if (evt.GetId() == 12)
 	{
-
+		_num1 = txtbox->GetValue();
 		txtbox->AppendText("*");
-
+		sym = "*";
+		symbol = true;
 
 	}
 	if (evt.GetId() == 13)
 	{
+		_num1 = txtbox->GetValue();
 		txtbox->AppendText("/");
-
+		sym = "/";
+		symbol = true;
 	}
 	if (evt.GetId() == 15)
 	{
-		txtbox->AppendText("DEC");
+		process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+		txtbox->Clear();
+		txtbox->AppendText(process->GetDecimal());
 	}
 	if (evt.GetId() == 17)
 	{
@@ -94,15 +122,51 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 	}
 	if (evt.GetId() == 18)
 	{
-		txtbox->AppendText("HEX");
+		process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+		txtbox->Clear();
+		txtbox->AppendText(process->GetHexadecimal());
 	}
 	if (evt.GetId() == 19)
 	{
-		txtbox->AppendText("Binary");
+		process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+		txtbox->Clear();
+		txtbox->AppendText(process->GetBinary());
 	}
 	if (evt.GetId() == 20)
 	{
-		txtbox->AppendText("=");
+		symbol = false;
+		if (sym == "+")
+		{
+			num1 = wxAtoi(_num1);
+			num2 = wxAtoi(_num2);
+			txtbox->Clear();
+			txtbox->AppendText(process->GetAddition(num1,num2));
+		}
+		else if (sym == "-")
+		{
+			num1 = wxAtoi(_num1);
+			num2 = wxAtoi(_num2);
+			txtbox->Clear();
+			txtbox->AppendText(process->GetSubtraction(num1, num2));
+		}
+		else if (sym == "/")
+		{
+			num1 = wxAtoi(_num1);
+			num2 = wxAtoi(_num2);
+			txtbox->Clear();
+			txtbox->AppendText(process->GetDivide(num1, num2));
+		}
+		else if (sym == "*")
+		{
+			num1 = wxAtoi(_num1);
+			num2 = wxAtoi(_num2);
+			txtbox->Clear();
+			txtbox->AppendText(process->GetMultiply(num1, num2));
+		}
+		_num2.Clear();
+		_num1.Clear();
+		num1 = 0;
+		num2 = 0;
 	}
 	if (evt.GetId() == 10)
 	{

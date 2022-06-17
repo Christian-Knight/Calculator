@@ -22,6 +22,7 @@
     <ClInclude Include="cal.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="processor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cal.cpp" />
