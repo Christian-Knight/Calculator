@@ -19,10 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="add.h" />
     <ClInclude Include="cal.h" />
+    <ClInclude Include="div.h" />
     <ClInclude Include="factory.h" />
+    <ClInclude Include="IBaseCommand.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="mult.h" />
     <ClInclude Include="processor.h" />
+    <ClInclude Include="sub.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cal.cpp" />

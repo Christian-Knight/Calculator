@@ -1,6 +1,11 @@
 #include "cal.h"
 #include "factory.h"
 #include "processor.h"
+#include <vector>
+#include "add.h"
+#include "sub.h"
+#include "mult.h"
+#include "div.h"
 wxBEGIN_EVENT_TABLE(cal, wxFrame)
 
 wxEND_EVENT_TABLE()
@@ -53,6 +58,7 @@ cal::~cal()
 
 void cal::OnButtonClicked(wxCommandEvent& evt)
 {
+	std::vector<IBaseCommand*> com;
 	processor* process = processor::GetInstance();
 	wxString txtdisplay = "";
 	if (evt.GetId() >= 0 && evt.GetId() < 10)
@@ -137,31 +143,75 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 		symbol = false;
 		if (sym == "+")
 		{
+			add* Add = new add();
+
 			num1 = wxAtoi(_num1);
 			num2 = wxAtoi(_num2);
+
+			Add->setnum1(num1);
+			Add->setnum2(num2);
+
+			com.push_back(Add);
+
 			txtbox->Clear();
-			txtbox->AppendText(process->GetAddition(num1,num2));
+
+			txtbox->AppendText(com[0]->Execute());
+			com.pop_back();
+			delete Add;
 		}
 		else if (sym == "-")
 		{
+			sub* Sub = new sub();
+
 			num1 = wxAtoi(_num1);
 			num2 = wxAtoi(_num2);
+
+			Sub->setnum1(num1);
+			Sub->setnum2(num2);
+
+			com.push_back(Sub);
+
 			txtbox->Clear();
-			txtbox->AppendText(process->GetSubtraction(num1, num2));
+
+			txtbox->AppendText(com[0]->Execute());
+			com.pop_back();
+			delete Sub;
 		}
 		else if (sym == "/")
 		{
+			divi* Div = new divi();
+
 			num1 = wxAtoi(_num1);
 			num2 = wxAtoi(_num2);
+
+			Div->setnum1(num1);
+			Div->setnum2(num2);
+
+			com.push_back(Div);
+
 			txtbox->Clear();
-			txtbox->AppendText(process->GetDivide(num1, num2));
+
+			txtbox->AppendText(com[0]->Execute());
+			com.pop_back();
+			delete Div;
 		}
 		else if (sym == "*")
 		{
+			mult* Mult = new mult();
+
 			num1 = wxAtoi(_num1);
 			num2 = wxAtoi(_num2);
+
+			Mult->setnum1(num1);
+			Mult->setnum2(num2);
+
+			com.push_back(Mult);
+
 			txtbox->Clear();
-			txtbox->AppendText(process->GetMultiply(num1, num2));
+
+			txtbox->AppendText(com[0]->Execute());
+			com.pop_back();
+			delete Mult;
 		}
 		_num2.Clear();
 		_num1.Clear();
