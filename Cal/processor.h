@@ -100,4 +100,3 @@ public:
 	//	return multi;
 	//}
 };
-processor* processor::_processor = nullptr;

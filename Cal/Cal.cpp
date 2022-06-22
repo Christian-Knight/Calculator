@@ -12,7 +12,11 @@ wxEND_EVENT_TABLE()
 int num1, num2;
 wxString _num1 = "";
 wxString _num2 = "";
+wxString holder = "";
 bool symbol = false;
+bool setnum = false;
+bool posneg = false;
+bool setholder = false;
 wxString sym = "";
 cal::cal() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(265, 445))
 {
@@ -76,49 +80,65 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 			{
 				_num2 += std::to_string(evt.GetId());
 			}
-			
 
+
+		}
+		else
+		{
+
+			_num1 = txtbox->GetValue();
 		}
 	}
 
 	if (evt.GetId() == 16)
 	{
 		txtbox->Clear();
+		setnum = false;
+		setholder = false;
+		symbol = false;
+		holder.Clear();
+		_num2.Clear();
+		_num1.Clear();
 	}
 	if (evt.GetId() == 11)
 	{
-		_num1 = txtbox->GetValue();
+
 		txtbox->AppendText("+");
 		sym = "+";
 		symbol = true;
-
+		setholder = false;
 	}
 	if (evt.GetId() == 14)
 	{
-		_num1 = txtbox->GetValue();
+
 		txtbox->AppendText("-");
 		sym = "-";
 		symbol = true;
-
+		setholder = false;
 	}
 	if (evt.GetId() == 12)
 	{
-		_num1 = txtbox->GetValue();
+
 		txtbox->AppendText("*");
 		sym = "*";
 		symbol = true;
-
+		setholder = false;
 	}
 	if (evt.GetId() == 13)
 	{
-		_num1 = txtbox->GetValue();
+
 		txtbox->AppendText("/");
 		sym = "/";
 		symbol = true;
+		setholder = false;
 	}
 	if (evt.GetId() == 15)
 	{
-		process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+		if (setnum == false)
+		{
+			process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+			setnum = true;
+		}
 		txtbox->Clear();
 		txtbox->AppendText(process->GetDecimal());
 	}
@@ -128,13 +148,21 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 	}
 	if (evt.GetId() == 18)
 	{
-		process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+		if (setnum == false)
+		{
+			process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+			setnum = true;
+		}
 		txtbox->Clear();
 		txtbox->AppendText(process->GetHexadecimal());
 	}
 	if (evt.GetId() == 19)
 	{
-		process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+		if (setnum == false)
+		{
+			process->SetBaseNum(wxAtoi(txtbox->GetValue()));
+			setnum = true;
+		}
 		txtbox->Clear();
 		txtbox->AppendText(process->GetBinary());
 	}
@@ -215,12 +243,70 @@ void cal::OnButtonClicked(wxCommandEvent& evt)
 		}
 		_num2.Clear();
 		_num1.Clear();
+		holder.Clear();
 		num1 = 0;
 		num2 = 0;
+		setnum = false;
+		setholder = false;
 	}
 	if (evt.GetId() == 10)
 	{
-		txtbox->AppendText("+/-");
+		if (symbol == false)
+		{
+			if (setholder == false)
+			{
+				holder = _num1;
+				setholder = true;
+			}
+			if (posneg == true)
+			{
+				posneg = false;
+				_num1.Clear();
+				_num1 = holder;
+				txtbox->Clear();
+				txtbox->AppendText(_num1);
+			}
+			else
+			{
+				posneg = true;
+				_num1.Clear();
+				_num1 = "-";
+				_num1 += holder;
+				txtbox->Clear();
+				txtbox->AppendText(_num1);
+			}
+		}
+		else
+		{
+			if (setholder == false)
+			{
+				holder = _num2;
+				setholder = true;
+			}
+			if (posneg == true)
+			{
+				posneg = false;
+				_num2.Clear();
+				_num2 += holder;
+				txtbox->Clear();
+				txtbox->AppendText(_num1);
+				txtbox->AppendText(sym);
+				txtbox->AppendText(_num2);
+			}
+			else
+			{
+				posneg = true;
+				_num2.Clear();
+				_num2 = "-";
+				_num2 += holder;
+				txtbox->Clear();
+				txtbox->AppendText(_num1);
+				txtbox->AppendText(sym);
+				txtbox->AppendText(_num2);
+				
+			}
+		}
+		
 	}
 }
 
